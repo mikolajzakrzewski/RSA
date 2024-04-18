@@ -1,7 +1,5 @@
 package edu.crypto;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -48,7 +46,7 @@ public class Controller {
     @FXML
     private Label chosenOutputEncodedFile;
 
-    private RSA rsa = new RSA();
+    private final RSA rsa = new RSA();
 
     private File encodedInputFile;
 
@@ -59,16 +57,6 @@ public class Controller {
     private File decodedOutputFile;
 
     public void initialize() {
-        nPublicKey.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                // Sprawdzenie czy długość tekstu przekracza 16 znaków
-//                if (newValue.length() > 16) {
-//                    // Jeśli tak, przycięcie tekstu do 16 znaków
-//                    keyTextField.setText(newValue.substring(0, 32));
-//                }
-            }
-        });
         this.rsa.generateKeys();
         nPublicKey.setText(rsa.getN().toString(16));
         ePublicKey.setText(rsa.getE().toString(16));
