@@ -79,7 +79,7 @@
             <Button layoutX="445.0" layoutY="535.0" mnemonicParsing="false" onAction="#encodedInputFileButtonClick" text="Wybierz plik do odczytu" />
             <Label fx:id="chosenInputEncodedFile" alignment="CENTER" layoutX="418.0" layoutY="580.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
             <Label layoutX="15.0" layoutY="72.0" prefHeight="26.0" text="Wartość klucza publicznego e (heksadecymalnie):" />
-            <Label layoutX="15.0" layoutY="98.0" prefHeight="26.0" text="Wartość klucza publicznego d (heksadecymalnie):" />
+            <Label layoutX="15.0" layoutY="98.0" prefHeight="26.0" text="Wartość klucza prywatnego d (heksadecymalnie):" />
             <TextField fx:id="ePublicKey" layoutX="293.0" layoutY="72.0" prefWidth="300.0" />
             <TextField fx:id="dPrivateKey" layoutX="293.0" layoutY="98.0" prefWidth="300.0" />
       </children>

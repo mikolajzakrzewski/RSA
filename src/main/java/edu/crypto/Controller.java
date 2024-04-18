@@ -91,8 +91,8 @@ public class Controller {
     }
 
     public void decryptButtonClick(ActionEvent actionEvent) {
-        BigInteger n = rsa.getN();
-        BigInteger d = rsa.getD();
+        BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
+        BigInteger d = new BigInteger(this.dPrivateKey.getText(), 16);
         byte[] byteEncryptedMessage = new BigInteger(encryptedTextArea.getText()).toByteArray();
         String decryptedText = new String(rsa.decipherText(byteEncryptedMessage, d, n).toByteArray(), StandardCharsets.UTF_8);
         decryptedTextArea.setText(decryptedText);
@@ -107,8 +107,8 @@ public class Controller {
             alert.showAndWait();
             return;
         }
-        BigInteger n = rsa.getN();
-        BigInteger e = rsa.getE();
+        BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
+        BigInteger e = new BigInteger(this.ePublicKey.getText(), 16);
         byte[] message = Files.readAllBytes(Paths.get(decodedInputFile.toURI()));
         byte[] cypheredMessage = rsa.cypherText(message, e, n).toByteArray();
         Files.write(encodedOutputFile.toPath(), cypheredMessage);
