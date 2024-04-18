@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  Copyright (c) 2015, 2019, Gluon and/or its affiliates.
+  All rights reserved. Use is subject to license terms.
+
+  This file is available and licensed under the following license:
+
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions
+  are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in
+    the documentation and/or other materials provided with the distribution.
+  - Neither the name of Oracle Corporation nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+  "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+  OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+  SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+  LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+  DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+  THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="800.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.crypto.Controller">
+  <children>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="524.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
+      <children>
+            <Label layoutX="212.0" layoutY="127.0" text="Szyfrowanie / Deszyfrowanie" textAlignment="CENTER">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="15.0" layoutY="46.0" prefHeight="26.0" text="Wartość klucza publicznego a (heksadecymalnie):" />
+            <TextField fx:id="nPublicKey" layoutX="293.0" layoutY="46.0" prefWidth="300.0" />
+            <Button layoutX="370.0" layoutY="15.0" mnemonicParsing="false" onAction="#generateButtonClick" text="Wygeneruj klucze" />
+            <Label layoutX="293.0" layoutY="14.0" prefHeight="28.0" prefWidth="54.0" text="Klucze" textAlignment="CENTER">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="decryptedTextArea" layoutX="42.0" layoutY="173.0" prefHeight="172.0" prefWidth="200.0" />
+            <Label layoutX="110.0" layoutY="155.0" text="Tekst Jawny" />
+            <TextArea fx:id="encryptedTextArea" layoutX="402.0" layoutY="173.0" prefHeight="172.0" prefWidth="200.0" />
+            <Label layoutX="470.0" layoutY="155.0" text="Szyfrogram" />
+            <Button layoutX="272.0" layoutY="218.0" mnemonicParsing="false" onAction="#encryptButtonClick" prefWidth="100.0" text="Szyfruj -&gt;" />
+            <Button layoutX="272.0" layoutY="259.0" mnemonicParsing="false" onAction="#decryptButtonClick" prefWidth="100.0" text="&lt;- Deszyfruj" />
+            <Label layoutX="178.0" layoutY="367.0" text="Szyfrowanie / Deszyfrowanie z pliku" textAlignment="CENTER">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+            <Button layoutX="45.0" layoutY="535.0" mnemonicParsing="false" onAction="#decodedOutputFileButtonClick" text="Wybierz plik do zapisu" />
+            <Button alignment="CENTER" layoutX="449.0" layoutY="418.0" mnemonicParsing="false" onAction="#encodedOutputFileButtonClick" text="Wybierz plik do zapisu" />
+            <Button layoutX="272.0" layoutY="418.0" mnemonicParsing="false" onAction="#encryptFileButtonClick" prefWidth="100.0" text="Szyfruj -&gt;" />
+            <Button layoutX="270.0" layoutY="535.0" mnemonicParsing="false" onAction="#decryptFileButtonClick" prefWidth="100.0" text="&lt;- Deszyfruj" />
+            <Label fx:id="chosenOutputDecodedFile" alignment="CENTER" layoutX="15.0" layoutY="580.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
+            <Label fx:id="chosenOutputEncodedFile" alignment="CENTER" layoutX="419.0" layoutY="468.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
+            <Button layoutX="41.0" layoutY="418.0" mnemonicParsing="false" onAction="#decodedInputFileButtonClick" text="Wybierz plik do odczytu" />
+            <Label fx:id="chosenInputDecodedFile" alignment="CENTER" layoutX="15.0" layoutY="468.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
+            <Button layoutX="445.0" layoutY="535.0" mnemonicParsing="false" onAction="#encodedInputFileButtonClick" text="Wybierz plik do odczytu" />
+            <Label fx:id="chosenInputEncodedFile" alignment="CENTER" layoutX="418.0" layoutY="580.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
+            <Label layoutX="15.0" layoutY="72.0" prefHeight="26.0" text="Wartość klucza publicznego e (heksadecymalnie):" />
+            <Label layoutX="15.0" layoutY="98.0" prefHeight="26.0" text="Wartość klucza publicznego d (heksadecymalnie):" />
+            <TextField fx:id="ePublicKey" layoutX="293.0" layoutY="72.0" prefWidth="300.0" />
+            <TextField fx:id="dPrivateKey" layoutX="293.0" layoutY="98.0" prefWidth="300.0" />
+      </children>
+    </AnchorPane>
+  </children>
+</VBox>
