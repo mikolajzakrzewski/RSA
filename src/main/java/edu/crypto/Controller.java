@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 
 public class Controller {
@@ -48,6 +49,8 @@ public class Controller {
 
     private final RSA rsa = new RSA();
 
+    private final Converter converter = new Converter();
+
     private File encodedInputFile;
 
     private File decodedInputFile;
@@ -73,48 +76,58 @@ public class Controller {
     public void encryptButtonClick(ActionEvent actionEvent) {
         BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
         BigInteger e = new BigInteger(this.ePublicKey.getText(), 16);
-        byte[] byteDecryptedMessage = decryptedTextArea.getText().getBytes();
-        String stringEncryptedMessage = rsa.cypherText(byteDecryptedMessage, e, n).toString();
-        encryptedTextArea.setText(stringEncryptedMessage);
+        String stringText = decryptedTextArea.getText();
+        byte[] byteText = stringText.getBytes();
+        ArrayList<BigInteger> bigIntegerArrayListCypheredText = rsa.cypherText(byteText, e, n);
+        byte[] cypheredByteText = converter.bigIntegerArrayListToByteArray(bigIntegerArrayListCypheredText);
+        encryptedTextArea.setText(converter.byteArrayToHexString(cypheredByteText));
     }
 
     public void decryptButtonClick(ActionEvent actionEvent) {
         BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
         BigInteger d = new BigInteger(this.dPrivateKey.getText(), 16);
-        byte[] byteEncryptedMessage = new BigInteger(encryptedTextArea.getText()).toByteArray();
-        String decryptedText = new String(rsa.decipherText(byteEncryptedMessage, d, n).toByteArray(), StandardCharsets.UTF_8);
-        decryptedTextArea.setText(decryptedText);
+        String stringText = encryptedTextArea.getText();
+        byte[] byteText = converter.hexStringToByteArray(stringText);
+        ArrayList<BigInteger> bigIntegerArrayListText = converter.byteArrayToBigIntegerArrayList(byteText);
+        byte[] decryptedText = rsa.decipherText(bigIntegerArrayListText, d, n);
+        decryptedTextArea.setText(new String(decryptedText, StandardCharsets.UTF_8));
+    }
+
+    private void noFileSelectedWarning() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning");
+        alert.setHeaderText(null);
+        alert.setContentText("Plik nie został wybrany");
+        alert.showAndWait();
     }
 
     public void encryptFileButtonClick(ActionEvent actionEvent) throws IOException {
-        if (decodedInputFile == null || encodedOutputFile == null)  {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Plik nie został wybrany");
-            alert.showAndWait();
+        if (decodedInputFile == null || encodedOutputFile == null) {
+            noFileSelectedWarning();
             return;
         }
         BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
         BigInteger e = new BigInteger(this.ePublicKey.getText(), 16);
         byte[] message = Files.readAllBytes(Paths.get(decodedInputFile.toURI()));
-        byte[] cypheredMessage = rsa.cypherText(message, e, n).toByteArray();
-        Files.write(encodedOutputFile.toPath(), cypheredMessage);
+        ArrayList<BigInteger> bigIntegerArrayListCypheredMessage = rsa.cypherText(message, e, n);
+        // TODO
+        byte[] byteCypheredMessage = converter.byteArrayToHexString(converter.bigIntegerArrayListToByteArray(bigIntegerArrayListCypheredMessage)).getBytes();
+        //
+        Files.write(encodedOutputFile.toPath(), byteCypheredMessage);
     }
 
     public void decryptFileButtonClick(ActionEvent actionEvent) throws IOException {
-        if (encodedInputFile == null || decodedOutputFile == null)  {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Warning");
-            alert.setHeaderText(null);
-            alert.setContentText("Plik nie został wybrany");
-            alert.showAndWait();
+        if (decodedInputFile == null || encodedOutputFile == null) {
+            noFileSelectedWarning();
             return;
         }
         BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
         BigInteger d = new BigInteger(this.dPrivateKey.getText(), 16);
         byte[] byteEncryptedFile = Files.readAllBytes(Paths.get(encodedInputFile.toURI()));
-        byte[] byteDecryptedFile = rsa.decipherText(byteEncryptedFile, d, n).toByteArray();
+        // TODO
+        ArrayList<BigInteger> bigIntegerArrayListEncryptedText = converter.byteArrayToBigIntegerArrayList(byteEncryptedFile);
+        //
+        byte[] byteDecryptedFile = rsa.decipherText(bigIntegerArrayListEncryptedText, d, n);
         Files.write(decodedOutputFile.toPath(), byteDecryptedFile);
     }
 
@@ -126,7 +139,7 @@ public class Controller {
         fileChooser.getExtensionFilters().add(extFilter);
         Stage stage = new Stage();
         encodedInputFile = fileChooser.showOpenDialog(stage);
-        if(encodedInputFile != null) {
+        if (encodedInputFile != null) {
             chosenInputEncodedFile.setText(encodedInputFile.toString());
         }
     }
