@@ -85,7 +85,7 @@ public class RSA {
             throw new RuntimeException("Incorrect message length. Given length: " + chunkWithPadding.length + ", expected length: " + chunkSize);
         }
         int paddingLength = 2;
-        for (int i = 2; i < chunkWithPadding.length - 1; i++) {
+        for (int i = 2; i < chunkWithPadding.length; i++) {
             paddingLength++;
             if (chunkWithPadding[i] == 0x00) {
                 break;
@@ -98,7 +98,7 @@ public class RSA {
 
     public ArrayList<BigInteger> cypherText(byte[] plainText, BigInteger e, BigInteger n) {
         ArrayList<BigInteger> cypherText = new ArrayList<>();
-        int chunkSizeWithoutPadding = ((n.bitLength() - 1) / 8) - 11;
+        int chunkSizeWithoutPadding = (N / 8) - 11;
         for (int i = 0; i < plainText.length; i += chunkSizeWithoutPadding) {
             byte[] chunkWithoutPadding = new byte[chunkSizeWithoutPadding];
             if (i + chunkSizeWithoutPadding > plainText.length) {
@@ -109,7 +109,7 @@ public class RSA {
                 System.arraycopy(plainText, i, chunkWithoutPadding, 0, chunkSizeWithoutPadding);
             }
             byte[] chunkWithPadding = this.addPadding(chunkWithoutPadding);
-            BigInteger m = new BigInteger(1, chunkWithPadding);
+            BigInteger m = new BigInteger(chunkWithPadding);
             BigInteger c = cipher(m, e, n);
             cypherText.add(c);
         }

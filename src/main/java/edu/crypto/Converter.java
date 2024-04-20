@@ -5,46 +5,28 @@ import java.math.BigInteger;
 
 public class Converter {
 
-    public byte[] bigIntegerArrayListToByteArray(ArrayList<BigInteger> bigIntegerArrayList) {
-        int bytesNumber = 0;
-        ArrayList<byte[]> byteArrayArrayList = new ArrayList<>();
+    public String bigIntegerArrayListToHexString(ArrayList<BigInteger> bigIntegerArrayList) {
+        StringBuilder hexStringBuilder = new StringBuilder();
         for (BigInteger i : bigIntegerArrayList) {
-            byte[] bigIntegerByteArray = i.toByteArray();
-            byteArrayArrayList.add(bigIntegerByteArray);
-            bytesNumber += bigIntegerByteArray.length;
+            hexStringBuilder.append(i.toString(16));
+            hexStringBuilder.append("  ");
         }
-        byte[] byteArray = new byte[bytesNumber];
-        int currentIndex = 0;
-        for (byte[] chunk : byteArrayArrayList) {
-            System.arraycopy(chunk, 0, byteArray, currentIndex, chunk.length);
-            currentIndex += chunk.length;
-        }
-        return byteArray;
+        return String.valueOf(hexStringBuilder);
     }
 
-    public ArrayList<BigInteger> byteArrayToBigIntegerArrayList(byte[] byteArray) {
+    public ArrayList<BigInteger> hexStringToBigIntegerArrayList(String hexString) {
         ArrayList<BigInteger> bigIntegerArrayList = new ArrayList<>();
-        for (int i = 0; i < byteArray.length; i += RSA.N / 8) {
-            byte[] chunk = new byte[RSA.N / 8];
-            System.arraycopy(byteArray, i, chunk, 0, chunk.length);
-            bigIntegerArrayList.add(new BigInteger(chunk));
+        int hexStringLength = hexString.length();
+        int currentIndex = 0;
+        while (currentIndex < hexStringLength) {
+            int endIndex = hexString.indexOf("  ", currentIndex);
+            String hex = hexString.substring(currentIndex, endIndex);
+            if (!hex.isEmpty()) {
+                bigIntegerArrayList.add(new BigInteger(hex, 16));
+            }
+            currentIndex = endIndex + 2;
         }
         return bigIntegerArrayList;
-    }
-
-    public byte[] hexStringToByteArray(String hexString) {
-        byte[] bytes = new byte[hexString.length() / 2];
-        for (int i = 0; i < hexString.length(); i += 2) {
-            bytes[i / 2] = (byte) Integer.parseInt(hexString.substring(i, i + 2), 16);
-        }
-        return bytes;
-    }
-
-    public String byteArrayToHexString(byte[] bytes) {
-        StringBuilder stringBuilder = new StringBuilder(bytes.length * 2);
-        for(byte b: bytes)
-            stringBuilder.append(String.format("%02x", b));
-        return stringBuilder.toString();
     }
 
 }

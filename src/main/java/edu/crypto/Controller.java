@@ -9,8 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -79,16 +78,14 @@ public class Controller {
         String stringText = decryptedTextArea.getText();
         byte[] byteText = stringText.getBytes();
         ArrayList<BigInteger> bigIntegerArrayListCypheredText = rsa.cypherText(byteText, e, n);
-        byte[] cypheredByteText = converter.bigIntegerArrayListToByteArray(bigIntegerArrayListCypheredText);
-        encryptedTextArea.setText(converter.byteArrayToHexString(cypheredByteText));
+        encryptedTextArea.setText(converter.bigIntegerArrayListToHexString(bigIntegerArrayListCypheredText));
     }
 
     public void decryptButtonClick(ActionEvent actionEvent) {
         BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
         BigInteger d = new BigInteger(this.dPrivateKey.getText(), 16);
         String stringText = encryptedTextArea.getText();
-        byte[] byteText = converter.hexStringToByteArray(stringText);
-        ArrayList<BigInteger> bigIntegerArrayListText = converter.byteArrayToBigIntegerArrayList(byteText);
+        ArrayList<BigInteger> bigIntegerArrayListText = converter.hexStringToBigIntegerArrayList(stringText);
         byte[] decryptedText = rsa.decipherText(bigIntegerArrayListText, d, n);
         decryptedTextArea.setText(new String(decryptedText, StandardCharsets.UTF_8));
     }
@@ -110,10 +107,10 @@ public class Controller {
         BigInteger e = new BigInteger(this.ePublicKey.getText(), 16);
         byte[] message = Files.readAllBytes(Paths.get(decodedInputFile.toURI()));
         ArrayList<BigInteger> bigIntegerArrayListCypheredMessage = rsa.cypherText(message, e, n);
-        // TODO
-        byte[] byteCypheredMessage = converter.byteArrayToHexString(converter.bigIntegerArrayListToByteArray(bigIntegerArrayListCypheredMessage)).getBytes();
-        //
-        Files.write(encodedOutputFile.toPath(), byteCypheredMessage);
+        String hexStringCypheredMessage = converter.bigIntegerArrayListToHexString(bigIntegerArrayListCypheredMessage);
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(encodedOutputFile))) {
+            bufferedWriter.write(hexStringCypheredMessage);
+        }
     }
 
     public void decryptFileButtonClick(ActionEvent actionEvent) throws IOException {
@@ -123,11 +120,16 @@ public class Controller {
         }
         BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
         BigInteger d = new BigInteger(this.dPrivateKey.getText(), 16);
-        byte[] byteEncryptedFile = Files.readAllBytes(Paths.get(encodedInputFile.toURI()));
-        // TODO
-        ArrayList<BigInteger> bigIntegerArrayListEncryptedText = converter.byteArrayToBigIntegerArrayList(byteEncryptedFile);
-        //
-        byte[] byteDecryptedFile = rsa.decipherText(bigIntegerArrayListEncryptedText, d, n);
+        StringBuilder fileContentBuilder = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(encodedInputFile))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                fileContentBuilder.append(line);
+            }
+        }
+        String cipheredMessageHex = fileContentBuilder.toString();
+        ArrayList<BigInteger> bigIntegerArrayListCipheredMessage = converter.hexStringToBigIntegerArrayList(cipheredMessageHex);
+        byte[] byteDecryptedFile = rsa.decipherText(bigIntegerArrayListCipheredMessage, d, n);
         Files.write(decodedOutputFile.toPath(), byteDecryptedFile);
     }
 

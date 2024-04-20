@@ -3,9 +3,7 @@ package edu.crypto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -37,11 +35,6 @@ class RSATest {
         ArrayList<BigInteger> M = rsa.cypherText(byteText, e, n);
         byte[] m = rsa.decipherText(M, d, n);
         Assertions.assertArrayEquals(byteText, m);
-        Converter converter = new Converter();
-        byte[] byteTextConverted = converter.bigIntegerArrayListToByteArray(M);
-        ArrayList<BigInteger> bigIntegerArrayListConverted = converter.byteArrayToBigIntegerArrayList(byteTextConverted);
-        byte[] mAfterConverting = rsa.decipherText(bigIntegerArrayListConverted, d, n);
-        Assertions.assertArrayEquals(byteText, mAfterConverting);
     }
 
     @Test
@@ -51,10 +44,23 @@ class RSATest {
         BigInteger e = rsa.getE();
         BigInteger d = rsa.getD();
         byte[] byteText = Files.readAllBytes(Paths.get("testFiles/inputFile.pdf"));
-        ArrayList<BigInteger> cypheredText = rsa.cypherText(byteText, e, n);
         Converter converter = new Converter();
-        cypheredText = converter.byteArrayToBigIntegerArrayList(converter.bigIntegerArrayListToByteArray(cypheredText));
-        byte[] cypheredDecipheredText = rsa.decipherText(cypheredText, d, n);
+        ArrayList<BigInteger> cypheredText = rsa.cypherText(byteText, e, n);
+        String cypheredTextHexString = converter.bigIntegerArrayListToHexString(cypheredText);
+        File file = new File("testFiles/cipheredTextFile.txt");
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file))) {
+            bufferedWriter.write(cypheredTextHexString);
+        }
+        StringBuilder fileContentBuilder = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                fileContentBuilder.append(line);
+            }
+        }
+        String cipheredMessageHex = fileContentBuilder.toString();
+        ArrayList<BigInteger> byteTextFromHexString = converter.hexStringToBigIntegerArrayList(cipheredMessageHex);
+        byte[] cypheredDecipheredText = rsa.decipherText(byteTextFromHexString, d, n);
         File outputFile = new File("testFiles/outputFile.pdf");
         try (FileOutputStream outputStream = new FileOutputStream(outputFile)) {
             outputStream.write(cypheredDecipheredText);
