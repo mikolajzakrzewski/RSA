@@ -80,10 +80,6 @@ public class RSA {
     }
 
     public byte[] removePadding(byte[] chunkWithPadding) {
-        int chunkSize = N / 8;
-        if (chunkWithPadding.length != chunkSize) {
-            throw new RuntimeException("Incorrect message length. Given length: " + chunkWithPadding.length + ", expected length: " + chunkSize);
-        }
         int paddingLength = 2;
         for (int i = 2; i < chunkWithPadding.length; i++) {
             paddingLength++;
