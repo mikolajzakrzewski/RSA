@@ -44,7 +44,7 @@
   <children>
     <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
       <children>
-            <Label layoutX="207.0" layoutY="140.0" text="Szyfrowanie / Deszyfrowanie" textAlignment="CENTER">
+            <Label layoutX="195.0" layoutY="141.0" text="Szyfrowanie / Deszyfrowanie" textAlignment="CENTER">
                <font>
                   <Font size="19.0" />
                </font>
@@ -57,12 +57,12 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <TextArea fx:id="decryptedTextArea" layoutX="43.0" layoutY="186.0" prefHeight="172.0" prefWidth="200.0" />
-            <Label layoutX="109.0" layoutY="165.0" text="Tekst Jawny" />
+            <TextArea fx:id="decryptedTextArea" layoutX="23.0" layoutY="186.0" prefHeight="172.0" prefWidth="200.0" />
+            <Label layoutX="80.0" layoutY="165.0" text="Tekst Jawny" />
             <TextArea fx:id="encryptedTextArea" layoutX="402.0" layoutY="186.0" prefHeight="172.0" prefWidth="200.0" />
             <Label layoutX="470.0" layoutY="165.0" text="Szyfrogram" />
-            <Button layoutX="272.0" layoutY="231.0" mnemonicParsing="false" onAction="#encryptButtonClick" prefWidth="100.0" text="Szyfruj -&gt;" />
-            <Button layoutX="272.0" layoutY="279.0" mnemonicParsing="false" onAction="#decryptButtonClick" prefWidth="100.0" text="&lt;- Deszyfruj" />
+            <Button layoutX="260.0" layoutY="231.0" mnemonicParsing="false" onAction="#encryptButtonClick" prefWidth="100.0" text="Szyfruj -&gt;" />
+            <Button layoutX="260.0" layoutY="279.0" mnemonicParsing="false" onAction="#decryptButtonClick" prefWidth="100.0" text="&lt;- Deszyfruj" />
             <Label layoutX="178.0" layoutY="374.0" text="Szyfrowanie / Deszyfrowanie z pliku" textAlignment="CENTER">
                <font>
                   <Font size="19.0" />

@@ -1,6 +1,5 @@
 package edu.crypto;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -65,14 +64,14 @@ public class Controller {
         dPrivateKey.setText(rsa.getD().toString(16));
     }
 
-    public void generateButtonClick(ActionEvent actionEvent) {
+    public void generateButtonClick() {
         this.rsa.generateKeys();
         nPublicKey.setText(rsa.getN().toString(16));
         ePublicKey.setText(rsa.getE().toString(16));
         dPrivateKey.setText(rsa.getD().toString(16));
     }
 
-    public void encryptButtonClick(ActionEvent actionEvent) {
+    public void encryptButtonClick() {
         BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
         BigInteger e = new BigInteger(this.ePublicKey.getText(), 16);
         String stringText = decryptedTextArea.getText();
@@ -81,7 +80,7 @@ public class Controller {
         encryptedTextArea.setText(converter.bigIntegerArrayListToHexString(bigIntegerArrayListCypheredText));
     }
 
-    public void decryptButtonClick(ActionEvent actionEvent) {
+    public void decryptButtonClick() {
         BigInteger n = new BigInteger(this.nPublicKey.getText(), 16);
         BigInteger d = new BigInteger(this.dPrivateKey.getText(), 16);
         String stringText = encryptedTextArea.getText();
@@ -98,7 +97,7 @@ public class Controller {
         alert.showAndWait();
     }
 
-    public void encryptFileButtonClick(ActionEvent actionEvent) throws IOException {
+    public void encryptFileButtonClick() throws IOException {
         if (decodedInputFile == null || encodedOutputFile == null) {
             noFileSelectedWarning();
             return;
@@ -113,7 +112,7 @@ public class Controller {
         }
     }
 
-    public void decryptFileButtonClick(ActionEvent actionEvent) throws IOException {
+    public void decryptFileButtonClick() throws IOException {
         if (decodedInputFile == null || encodedOutputFile == null) {
             noFileSelectedWarning();
             return;
@@ -133,7 +132,7 @@ public class Controller {
         Files.write(decodedOutputFile.toPath(), byteDecryptedFile);
     }
 
-    public void encodedInputFileButtonClick(ActionEvent actionEvent) {
+    public void encodedInputFileButtonClick() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         fileChooser.setTitle("Wybierz zaszyfrowany plik");
@@ -144,7 +143,7 @@ public class Controller {
         }
     }
 
-    public void decodedInputFileButtonClick(ActionEvent actionEvent) {
+    public void decodedInputFileButtonClick() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         fileChooser.setTitle("Wybierz jawny plik");
@@ -155,23 +154,23 @@ public class Controller {
         }
     }
 
-    public void decodedOutputFileButtonClick(ActionEvent actionEvent) {
+    private File chooseFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         fileChooser.setTitle("Wybierz plik do zapisu");
         Stage stage = new Stage();
-        decodedOutputFile = fileChooser.showSaveDialog(stage);
+        return fileChooser.showSaveDialog(stage);
+    }
+
+    public void decodedOutputFileButtonClick() {
+        decodedOutputFile = chooseFile();
         if(decodedOutputFile != null) {
             chosenOutputDecodedFile.setText(decodedOutputFile.toString());
         }
     }
 
-    public void encodedOutputFileButtonClick(ActionEvent actionEvent) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
-        fileChooser.setTitle("Wybierz plik do zapisu");
-        Stage stage = new Stage();
-        encodedOutputFile = fileChooser.showSaveDialog(stage);
+    public void encodedOutputFileButtonClick() {
+        encodedOutputFile = chooseFile();
         if(encodedOutputFile != null) {
             chosenOutputEncodedFile.setText(encodedOutputFile.toString());
         }
