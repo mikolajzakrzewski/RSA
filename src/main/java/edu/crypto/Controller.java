@@ -137,8 +137,6 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         fileChooser.setTitle("Wybierz zaszyfrowany plik");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text Files (*.txt)", "*.txt");
-        fileChooser.getExtensionFilters().add(extFilter);
         Stage stage = new Stage();
         encodedInputFile = fileChooser.showOpenDialog(stage);
         if (encodedInputFile != null) {
@@ -172,8 +170,6 @@ public class Controller {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         fileChooser.setTitle("Wybierz plik do zapisu");
-        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(".txt File",".txt");
-        fileChooser.getExtensionFilters().add(extFilter);
         Stage stage = new Stage();
         encodedOutputFile = fileChooser.showSaveDialog(stage);
         if(encodedOutputFile != null) {

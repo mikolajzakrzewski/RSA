@@ -49,7 +49,7 @@
                   <Font size="19.0" />
                </font>
             </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="46.0" prefHeight="26.0" text="Klucz publiczny a (heksadecymalnie):" />
+            <Label alignment="CENTER" layoutX="15.0" layoutY="46.0" prefHeight="26.0" text="Klucz publiczny n (heksadecymalnie):" />
             <TextField fx:id="nPublicKey" layoutX="223.0" layoutY="46.0" prefHeight="26.0" prefWidth="370.0" />
             <Button layoutX="345.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateButtonClick" text="Wygeneruj klucze" />
             <Label layoutX="89.0" layoutY="13.0" prefHeight="28.0" prefWidth="54.0" text="Klucze" textAlignment="CENTER">
