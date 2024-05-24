@@ -40,49 +40,45 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.crypto.Controller">
-  <children>
-    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" VBox.vgrow="ALWAYS">
-      <children>
-            <Label layoutX="195.0" layoutY="141.0" text="Szyfrowanie / Deszyfrowanie" textAlignment="CENTER">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <Label alignment="CENTER" layoutX="15.0" layoutY="46.0" prefHeight="26.0" text="Klucz publiczny n (heksadecymalnie):" />
-            <TextField fx:id="nPublicKey" layoutX="223.0" layoutY="46.0" prefHeight="26.0" prefWidth="370.0" />
-            <Button layoutX="345.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateButtonClick" text="Wygeneruj klucze" />
-            <Label layoutX="89.0" layoutY="13.0" prefHeight="28.0" prefWidth="54.0" text="Klucze" textAlignment="CENTER">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <TextArea fx:id="decryptedTextArea" layoutX="23.0" layoutY="186.0" prefHeight="172.0" prefWidth="200.0" />
-            <Label layoutX="80.0" layoutY="165.0" text="Tekst Jawny" />
-            <TextArea fx:id="encryptedTextArea" layoutX="402.0" layoutY="186.0" prefHeight="172.0" prefWidth="200.0" />
-            <Label layoutX="470.0" layoutY="165.0" text="Szyfrogram" />
-            <Button layoutX="260.0" layoutY="231.0" mnemonicParsing="false" onAction="#encryptButtonClick" prefWidth="100.0" text="Szyfruj -&gt;" />
-            <Button layoutX="260.0" layoutY="279.0" mnemonicParsing="false" onAction="#decryptButtonClick" prefWidth="100.0" text="&lt;- Deszyfruj" />
-            <Label layoutX="178.0" layoutY="374.0" text="Szyfrowanie / Deszyfrowanie z pliku" textAlignment="CENTER">
-               <font>
-                  <Font size="19.0" />
-               </font>
-            </Label>
-            <Button layoutX="45.0" layoutY="535.0" mnemonicParsing="false" onAction="#decodedOutputFileButtonClick" text="Wybierz plik do zapisu" />
-            <Button alignment="CENTER" layoutX="449.0" layoutY="418.0" mnemonicParsing="false" onAction="#encodedOutputFileButtonClick" text="Wybierz plik do zapisu" />
-            <Button layoutX="272.0" layoutY="418.0" mnemonicParsing="false" onAction="#encryptFileButtonClick" prefWidth="100.0" text="Szyfruj -&gt;" />
-            <Button layoutX="270.0" layoutY="535.0" mnemonicParsing="false" onAction="#decryptFileButtonClick" prefWidth="100.0" text="&lt;- Deszyfruj" />
-            <Label fx:id="chosenOutputDecodedFile" alignment="CENTER" layoutX="15.0" layoutY="580.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
-            <Label fx:id="chosenOutputEncodedFile" alignment="CENTER" layoutX="419.0" layoutY="468.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
-            <Button layoutX="41.0" layoutY="418.0" mnemonicParsing="false" onAction="#decodedInputFileButtonClick" text="Wybierz plik do odczytu" />
-            <Label fx:id="chosenInputDecodedFile" alignment="CENTER" layoutX="15.0" layoutY="468.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
-            <Button layoutX="445.0" layoutY="535.0" mnemonicParsing="false" onAction="#encodedInputFileButtonClick" text="Wybierz plik do odczytu" />
-            <Label fx:id="chosenInputEncodedFile" alignment="CENTER" layoutX="418.0" layoutY="580.0" prefHeight="50.0" prefWidth="200.0" text="Brak wybranego Pliku" textAlignment="CENTER" wrapText="true" />
-            <Label layoutX="15.0" layoutY="72.0" prefHeight="26.0" text="Klucz publiczny e (heksadecymalnie):" />
-            <Label layoutX="15.0" layoutY="98.0" prefHeight="26.0" text="Klucz prywatny d (heksadecymalnie):" />
-            <TextField fx:id="ePublicKey" layoutX="223.0" layoutY="72.0" prefHeight="26.0" prefWidth="370.0" />
-            <TextField fx:id="dPrivateKey" layoutX="223.0" layoutY="98.0" prefHeight="26.0" prefWidth="370.0" />
-      </children>
+<VBox prefHeight="625.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.crypto.Controller">
+    <AnchorPane prefWidth="620.0" VBox.vgrow="ALWAYS">
+        <Label layoutX="217.0" layoutY="141.0" text="Encryption / Decryption" textAlignment="CENTER">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Label alignment="CENTER" layoutX="49.0" layoutY="46.0" prefHeight="26.0" text="Public key n (hexadecimal):" />
+        <TextField fx:id="nPublicKey" layoutX="223.0" layoutY="46.0" prefHeight="26.0" prefWidth="370.0" />
+        <Button layoutX="354.0" layoutY="14.0" mnemonicParsing="false" onAction="#generateButtonClick" text="Generate keys" />
+        <Label layoutX="96.0" layoutY="13.0" prefHeight="28.0" prefWidth="54.0" text="Keys" textAlignment="CENTER">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <TextArea fx:id="decryptedTextArea" layoutX="23.0" layoutY="186.0" prefHeight="172.0" prefWidth="200.0" />
+        <Label layoutX="96.0" layoutY="165.0" text="Plain Text" />
+        <TextArea fx:id="encryptedTextArea" layoutX="393.0" layoutY="186.0" prefHeight="172.0" prefWidth="200.0" />
+        <Label layoutX="461.0" layoutY="165.0" text="Cipher Text" />
+        <Button layoutX="260.0" layoutY="231.0" mnemonicParsing="false" onAction="#encryptButtonClick" prefWidth="100.0" text="Encrypt -&gt;" />
+        <Button layoutX="260.0" layoutY="279.0" mnemonicParsing="false" onAction="#decryptButtonClick" prefWidth="100.0" text="&lt;- Decrypt" />
+        <Label layoutX="201.0" layoutY="372.0" text="File Encryption / Decryption" textAlignment="CENTER">
+            <font>
+                <Font size="19.0" />
+            </font>
+        </Label>
+        <Button layoutX="53.0" layoutY="528.0" mnemonicParsing="false" onAction="#decodedOutputFileButtonClick" text="Select file for saving" />
+        <Button alignment="CENTER" layoutX="430.0" layoutY="418.0" mnemonicParsing="false" onAction="#encodedOutputFileButtonClick" text="Select file for saving" />
+        <Button layoutX="260.0" layoutY="418.0" mnemonicParsing="false" onAction="#encryptFileButtonClick" prefWidth="100.0" text="Encrypt -&gt;" />
+        <Button layoutX="260.0" layoutY="528.0" mnemonicParsing="false" onAction="#decryptFileButtonClick" prefWidth="100.0" text="&lt;- Decrypt" />
+        <Label fx:id="chosenOutputDecodedFile" alignment="CENTER" layoutX="23.0" layoutY="566.0" prefHeight="50.0" prefWidth="200.0" text="No file selected" textAlignment="CENTER" wrapText="true" />
+        <Label fx:id="chosenOutputEncodedFile" alignment="CENTER" layoutX="393.0" layoutY="455.0" prefHeight="50.0" prefWidth="200.0" text="No file selected" textAlignment="CENTER" wrapText="true" />
+        <Button layoutX="50.0" layoutY="418.0" mnemonicParsing="false" onAction="#decodedInputFileButtonClick" text="Select file for reading" />
+        <Label fx:id="chosenInputDecodedFile" alignment="CENTER" layoutX="23.0" layoutY="455.0" prefHeight="50.0" prefWidth="200.0" text="No file selected" textAlignment="CENTER" wrapText="true" />
+        <Button layoutX="429.0" layoutY="528.0" mnemonicParsing="false" onAction="#encodedInputFileButtonClick" text="Select file for reading" />
+        <Label fx:id="chosenInputEncodedFile" alignment="CENTER" layoutX="394.0" layoutY="566.0" prefHeight="50.0" prefWidth="200.0" text="No file selected" textAlignment="CENTER" wrapText="true" />
+        <Label layoutX="49.0" layoutY="72.0" prefHeight="26.0" text="Public key e (hexadecimal):" />
+        <Label layoutX="47.0" layoutY="98.0" prefHeight="26.0" text="Private key d (hexadecimal):" />
+        <TextField fx:id="ePublicKey" layoutX="223.0" layoutY="72.0" prefHeight="26.0" prefWidth="370.0" />
+        <TextField fx:id="dPrivateKey" layoutX="223.0" layoutY="98.0" prefHeight="26.0" prefWidth="370.0" />
     </AnchorPane>
-  </children>
 </VBox>
